@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const DOTNET_API_URL = "https://dotnet-books-api.azurewebsites.net/books";
+const DOTNET_API_URL = process.env.DOTNET_API_URL || "https://dotnet-books-api.azurewebsites.net/books";
+
 
 router.get("/", async (req, res) => {
     try {
