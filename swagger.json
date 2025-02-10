@@ -1,0 +1,20 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Books API"
+    },
+    "paths": {
+      "/books": {
+        "get": {
+          "summary": "Hämta alla böcker",
+          "responses": {
+            "200": {
+              "description": "Lyckad hämtning av böcker"
+            }
+          }
+        }
+      }
+    }
+  }
+  

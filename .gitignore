@@ -1,0 +1,9 @@
+
+appsettings.json
+appsettings.Development.json
+launchSettings.json
+
+
+.env
+node_modules/
+
