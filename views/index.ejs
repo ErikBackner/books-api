@@ -1,12 +1,102 @@
+
 <!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Böcker</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        .book { 
+            border: 1px solid #ddd; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            border-radius: 5px; 
+            background-color: #f9f9f9;
+        }
+        .form-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background: #f4f4f4;
+            border-radius: 5px;
+        }
+        label { display: block; margin-top: 10px; }
+        input, textarea { width: 100%; padding: 5px; margin-top: 5px; }
+        button { margin-top: 10px; padding: 8px 12px; cursor: pointer; }
+    </style>
 </head>
 <body>
-    <h1>Välkommen till Books API</h1>
-    <p>Här kan du hantera dina böcker!</p>
+
+    <h1>Lista över böcker</h1>
+
+    <div class="form-container">
+        <h2>Lägg till en ny bok</h2>
+        <form id="book-form">
+            <label for="title">Titel:</label>
+            <input type="text" id="title" required>
+
+            <label for="author">Författare:</label>
+            <input type="text" id="author" required>
+
+            <label for="description">Beskrivning:</label>
+            <textarea id="description" required></textarea>
+
+            <label for="year">År:</label>
+            <input type="number" id="year" required>
+
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" required>
+
+            <button type="submit">Lägg till bok</button>
+        </form>
+    </div>
+
+    <div id="book-list">
+        <% books.forEach(book => { %>
+            <div class="book">
+                <h2><%= book.title %></h2>
+                <p><strong>Författare:</strong> <%= book.author %></p>
+                <p><strong>Beskrivning:</strong> <%= book.description %></p>
+                <p><strong>År:</strong> <%= book.year %></p>
+                <p><strong>Genre:</strong> <%= book.genre %></p>
+            </div>
+        <% }) %>
+    </div>
+
+    <script>
+        document.getElementById("book-form").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const book = {
+        title: document.getElementById("title").value,
+        author: document.getElementById("author").value,
+        description: document.getElementById("description").value,
+        year: parseInt(document.getElementById("year").value),
+        genre: document.getElementById("genre").value
+    };
+
+    try {
+        const response = await fetch("/books", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(book)
+        });
+
+        if (response.ok) {
+            alert("Bok tillagd!");
+            location.reload();
+        } else {
+            alert("Fel vid tillägg av bok.");
+        }
+    } catch (error) {
+        alert("Något gick fel: " + error.message);
+    }
+});
+
+    </script>
+
 </body>
 </html>
+
